@@ -19,6 +19,16 @@ class CombineItemsInCart < ActiveRecord::Migration
   end
   
 
-  def down
-  end
+  def self.down
+    #rozdelenie polozky s mnozstvom > 1 na vice samostatnych poloziek
+    LineItem.where("quantity > 1 ").each do |line_item|
+      #pridanie samostatnej polozky
+      line_item.quantity.times do
+        LineItem.create(:cart_id => line_item.cart_id, :product_id => line_item.product_id, :quantity => 1)
+      end
+      #odstraneni povodnych poloziek
+      line_item.destroy
+    end
+  end  
 end
+

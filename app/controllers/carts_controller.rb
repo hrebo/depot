@@ -13,12 +13,17 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
-    @cart = Cart.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @cart }
-    end
+    begin
+      @cart = Cart.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      logger.error "Pokus o pristup k neplatnemu kosiku #{params[:id]}"
+      redirect_to store_url, :notice => 'Neplatny kosik'  
+    else  
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @cart }
+      end
+    end  
   end
 
   # GET /carts/new
@@ -72,11 +77,13 @@ class CartsController < ApplicationController
   # DELETE /carts/1
   # DELETE /carts/1.json
   def destroy
-    @cart = Cart.find(params[:id])
+    @cart = current_cart
+    #@cart = Cart.find(params[:id])
     @cart.destroy
+    session[:cart_id] = nil
 
     respond_to do |format|
-      format.html { redirect_to carts_url }
+      format.html { redirect_to store_url, :notice => 'Vas kosik je prazdny' }
       format.json { head :no_content }
     end
   end
