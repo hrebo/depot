@@ -47,10 +47,11 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(params[:order])
-    @order.add_line_items_from_cart(current_cart)
+    #@order.add_line_items_from_cart(current_cart)
 
     respond_to do |format|
       if @order.save
+        @order.add_line_items_from_cart(current_cart)
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
         format.html { redirect_to store_url, :notice => 'Dakujeme za objednavku.' }

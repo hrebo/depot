@@ -8,13 +8,12 @@ class Cart < ActiveRecord::Base
   		current_item.quantity += 1
   	else
       current_item = line_items.create(:cart_id => cart_id,:product_id => product_id)
-  		#current_item = line_items.create(:cart_id => @cart.id,:product_id => product_id)
   	end
   	current_item
   end
 
   def total_price
-    line_items.to_s.sum { |item| item.total_price}
+    line_items.to_s.sum { |item| line_item.total_price}
   end
 
 end
