@@ -38,3 +38,5 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem 'thin'
+
+gem 'will_paginate','>= 3.0.pre'
