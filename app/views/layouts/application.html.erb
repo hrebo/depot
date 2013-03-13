@@ -20,6 +20,15 @@
       <a href="http://www..../faq" >Otázky</a><br />
       <a href="http://www..../news" >Novinky</a><br />
       <a href="http://www..../contact" >Kontakt</a><br /> <!-- řádek 20 -->
+
+      <% if session[:user_id] %>
+      <br />
+      <%= link_to 'Objednavky', orders_path %><br />
+      <%= link_to 'Produkty', products_path %><br />
+      <%= link_to 'Uzivatelia', users_path %><br />
+      <br />
+      <%= button_to 'Odhlasenie', logout_path, :method => :delete %>
+      <% end %>
     </div>
     <div id="main" >
       <%= yield %>

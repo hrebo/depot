@@ -1,0 +1,9 @@
+Dobry den,
+
+  dakujeme Vam za objednanie na webbu Pragmaticka knihovna, ktoru vytovril(a) <%= @order.name %>
+
+  Objednavka obsahuje nasledujuce polozky:
+
+  <%= render @order.line_items %>
+
+  Informacie o odoslany objednavky Vam zasleme v samostatnom emaili.
